@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPS Brief Appendices</title>
+<style>
+  :root {
+    --ink: #1c2230;
+    --muted: #5b6475;
+    --line: #dde1e8;
+    --soft: #f4f6f9;
+    --accent: #1f4e79;
+    --accent-soft: #e6eef7;
+    --study: #6b7280;   --study-bg: #eef0f3;
+    --lapsed: #a3361f;  --lapsed-bg: #fbe9e5;
+    --active: #2f6b3a;  --active-bg: #e5f2e7;
+    --testing: #8a5a00; --testing-bg: #fdf1d8;
+    --pending: #3b4fa0; --pending-bg: #e8ebfa;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font: 15px/1.5 "Georgia", "Times New Roman", serif;
+  }
+  main { max-width: 820px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1, h2, h3, .label, .pill, .stat .num, .stat .what, th, .toc, .meta, .callout b, .q {
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  h1 { font-size: 28px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .meta { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+  .intro { margin: 0 0 18px; }
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin: 0 0 8px; padding: 0; list-style: none; font-size: 13px; }
+  .toc a { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); text-decoration: none; }
+  .toc a b { display: block; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+
+  section { margin-top: 48px; }
+  h2 { font-size: 21px; margin: 0 0 4px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); }
+  h2 span { color: var(--accent); }
+  .sub { color: var(--muted); margin: 6px 0 16px; font-style: italic; }
+  h3 { font-size: 15px; margin: 22px 0 10px; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+
+  a { color: var(--accent); }
+  .cite { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+  .cite a { color: var(--muted); }
+  .nr { font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: 600; color: var(--accent) !important; text-decoration: none; }
+
+  /* Appendix A: timeline table */
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 10px; font-size: 12px; margin-bottom: 12px; align-items: center; color: var(--muted); font-family: -apple-system, "Segoe UI", Arial, sans-serif; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--line); }
+  td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.yr { font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-weight: 600; white-space: nowrap; color: var(--accent); width: 78px; }
+  td .name { font-weight: bold; display: block; margin-bottom: 2px; }
+  td.st { width: 170px; }
+  td.st .note { display: block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .p-study   { color: var(--study);   background: var(--study-bg); }
+  .p-lapsed  { color: var(--lapsed);  background: var(--lapsed-bg); }
+  .p-active  { color: var(--active);  background: var(--active-bg); }
+  .p-testing { color: var(--testing); background: var(--testing-bg); }
+  .p-pending { color: var(--pending); background: var(--pending-bg); }
+
+  /* Appendix B: cards */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; break-inside: avoid; display: flex; flex-direction: column; }
+  .card.wide { grid-column: 1 / -1; }
+  .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+  .card h4 { margin: 2px 0 8px; font-size: 16px; font-family: -apple-system, "Segoe UI", Arial, sans-serif; }
+  .card p { margin: 0 0 10px; font-size: 14px; }
+  .caveat { margin-top: auto; font-size: 13px; background: var(--soft); border-left: 3px solid var(--testing); padding: 8px 10px; border-radius: 0 6px 6px 0; }
+  .caveat b { font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--testing); margin-right: 4px; }
+
+  /* Appendix C: stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat { background: var(--accent-soft); border-radius: 10px; padding: 12px 14px; break-inside: avoid; }
+  .stat .num { font-size: 24px; font-weight: 700; color: var(--accent); line-height: 1.15; }
+  .stat .what { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 4px 0 6px; }
+  .stat p { margin: 0; font-size: 13.5px; }
+  .stat.wide { grid-column: span 2; }
+  .cases { list-style: none; padding: 0; margin: 0; }
+  .cases li { padding: 10px 0 10px 14px; border-left: 3px solid var(--line); margin-bottom: 6px; break-inside: avoid; font-size: 14.5px; }
+  .cases li b { font-family: -apple-system, "Segoe UI", Arial, sans-serif; }
+  .callout { margin-top: 16px; padding: 12px 14px; border: 1px solid #f0d79c; background: var(--testing-bg); border-radius: 8px; font-size: 14px; break-inside: avoid; }
+  .callout b { color: var(--testing); }
+
+  /* Appendix D: Q&A */
+  .qa { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .qa > div { padding: 12px 16px; border-bottom: 1px solid var(--line); break-inside: avoid; }
+  .qa > div:last-child { border-bottom: 0; }
+  .q { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .q::before { content: "Q  "; color: var(--accent); }
+  .qa p { margin: 0; font-size: 14.5px; }
+
+  /* Notes */
+  .notes { font-size: 13px; padding-left: 28px; columns: 2; column-gap: 28px; }
+  .notes li { margin-bottom: 6px; break-inside: avoid; }
+  .notes li:target { background: var(--testing-bg); }
+  .notes .use { color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .cards, .stats { grid-template-columns: 1fr; }
+    .stat.wide { grid-column: auto; }
+    .notes { columns: 1; }
+    table, thead, tbody, tr, td { display: block; }
+    thead { display: none; }
+    tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+    td { border: 0; padding: 4px 0; width: auto !important; }
+    .cite { white-space: normal; }
+  }
+
+  @page { size: letter; margin: 0.6in 0.65in; }
+  @media print {
+    main { max-width: none; padding: 0; }
+    body { font-size: 12.5px; }
+    .toc { display: none; }
+    section { margin-top: 0; break-before: page; }
+    section#a { break-before: auto; margin-top: 18px; }
+    .card p, .cases li, .qa p, td, .stat p { font-size: 12.5px; }
+    .notes { font-size: 10.5px; }
+    .notes li { margin-bottom: 3px; }
+    .cards { gap: 9px; }
+    .card { padding: 10px 13px; }
+    .card p { margin-bottom: 7px; }
+    h2 { font-size: 19px; }
+    .sub { margin: 4px 0 12px; }
+    a { text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>GPS Technical Brief: Appendices</h1>
+  <div class="meta">October 1, 2026 &middot; Malaika</div>
+  <p class="intro">This is the full text behind Appendices A–D. Each citation links to its source, and the bracketed number beside it, like <a class="nr" href="#n7">[7]</a>, points to the Brief Notes at the end.</p>
+  <ul class="toc">
+    <li><a href="#a"><b>Appendix A</b>Policies and where they stand</a></li>
+    <li><a href="#b"><b>Appendix B</b>Technology beyond Xona</a></li>
+    <li><a href="#c"><b>Appendix C</b>How much interference</a></li>
+    <li><a href="#d"><b>Appendix D</b>Likely press questions</a></li>
+    <li><a href="#notes"><b>Notes</b>Brief notes on sources</a></li>
+  </ul>
+</header>
+
+<!-- ============ APPENDIX A ============ -->
+<section id="a">
+  <h2><span>Appendix A.</span> More Policies and Where Each One Stands</h2>
+  <p class="sub">The body covers the 2018 law and the $10 million demonstration. These are the other policies, in order.</p>
+
+  <div class="legend">Status:
+    <span class="pill p-study">Study only</span>
+    <span class="pill p-testing">Testing</span>
+    <span class="pill p-pending">Pending</span>
+    <span class="pill p-active">In force / done</span>
+    <span class="pill p-lapsed">Deadline missed / unenforced</span>
+  </div>
+
+  <table>
+    <thead><tr><th>Year</th><th>Policy and what it does</th><th>Where it stands</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="yr">2010</td>
+        <td><span class="name">Sec. 219, Coast Guard Authorization Act of 2010</span>
+          Told DHS to study whether a single domestic backup to GPS is needed.
+          <span class="cite">(<a href="https://www.gps.gov/gps-legislation">GPS.gov</a>) <a class="nr" href="#n7">[7]</a></span></td>
+        <td class="st"><span class="pill p-study">Study only</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2016</td>
+        <td><span class="name">Sec. 1618, FY2017 defense bill</span>
+          Had DOD, DOT, and DHS jointly study technology-neutral requirements to back up and complement GPS.
+          <span class="cite">(<a href="https://www.gps.gov/gps-legislation">GPS.gov</a>) <a class="nr" href="#n7">[7]</a></span></td>
+        <td class="st"><span class="pill p-study">Study only</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2017–18</td>
+        <td><span class="name">Sec. 1606, FY2018 defense bill</span>
+          Told the three agencies to plan a backup GPS demonstration and authorized $10 million, which Congress appropriated in March 2018.
+          <span class="cite">(<a href="https://www.transportation.gov/sites/dot.gov/files/2021-01/NTRSA%20Report%20to%20Congress_Final_January%202021.pdf">U.S. DOT, 2021</a>) <a class="nr" href="#n9">[9]</a></span></td>
+        <td class="st"><span class="pill p-active">Done</span><span class="note">DOT ran the demonstration in March 2020.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2018</td>
+        <td><span class="name">National Timing Resilience and Security Act (49 U.S.C. § 312)</span>
+          Told DOT to provide a backup timing system within two years, subject to appropriations. A 2022 law (P.L. 117-103) struck the words “land-based.”
+          <span class="cite">(<a href="https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title49-section312&amp;num=0&amp;edition=prelim">49 U.S.C. § 312</a>) <a class="nr" href="#n8">[8]</a></span></td>
+        <td class="st"><span class="pill p-lapsed">Deadline missed</span><span class="note">Deadline passed in December 2020. No operating federal backup.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2020–21</td>
+        <td><span class="name">Executive Order 13905 and Space Policy Directive-7</span>
+          Set policy toward responsible use of GPS, multiple sources of timing, and stronger GPS cybersecurity.
+          <span class="cite">(<a href="https://www.gps.gov/resilience-through-responsible-use-pnt">GPS.gov</a> <a class="nr" href="#n21">[21]</a>; <a href="https://space.commerce.gov/policy/u-s-space-based-pnt-policy/">Office of Space Commerce</a> <a class="nr" href="#n22">[22]</a>)</span></td>
+        <td class="st"><span class="pill p-active">In force</span><span class="note">Still current national policy.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2021</td>
+        <td><span class="name">DOT report to Congress</span>
+          A roadmap for the 2018 law. Its industry roundtables found that no single system meets all needs and that carriers may not pay a subscription for backup timing.
+          <span class="cite">(<a href="https://www.transportation.gov/sites/dot.gov/files/2021-01/NTRSA%20Report%20to%20Congress_Final_January%202021.pdf">U.S. DOT, 2021</a>) <a class="nr" href="#n9">[9]</a></span></td>
+        <td class="st"><span class="pill p-study">Report only</span><span class="note">Not an implementation plan.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2024–26</td>
+        <td><span class="name">DOT complementary PNT testing</span>
+          $7.2 million to nine vendors for field tests. Phase I finished in June 2025, with a report to DOT leadership in March 2026.
+          <span class="cite">(<a href="https://www.transportation.gov/briefing-room/department-transportation-awards-7-million-complementary-positioning-navigation-and">U.S. DOT, 2024</a> <a class="nr" href="#n19">[19]</a>; <a href="https://www.volpe.dot.gov/news/executing-rapid-phase-us-dot-complementary-positioning-navigation-and-timing-action-plan-one">Volpe Center, 2026</a> <a class="nr" href="#n20">[20]</a>)</span></td>
+        <td class="st"><span class="pill p-testing">Testing</span><span class="note">Not deployment.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2025–26</td>
+        <td><span class="name">FCC inquiry and NextNav petition</span>
+          The FCC opened an inquiry in 2025 <span class="cite">(<a href="https://www.gpsworld.com/nextnav-proposes-a-gps-complement-and-backup-in-the-lower-900-mhz-band/">GPS World, 2025</a>) <a class="nr" href="#n23">[23]</a></span>.
+          NextNav asked for a nationwide 15 MHz license in the 902–928 MHz band <span class="cite">(<a href="https://docs.fcc.gov/public/attachments/DA-24-776A1.pdf">FCC, 2024</a>) <a class="nr" href="#n24">[24]</a></span>.
+          A draft rule went to the White House budget office in March 2026, and in April 2026 a House committee adopted an amendment to block FCC funds for finalizing it.
+          <span class="cite">(<a href="https://broadbandbreakfast.com/house-appropriators-move-to-block-nextnav-proposal/">Broadband Breakfast, 2026</a>) <a class="nr" href="#n25">[25]</a></span></td>
+        <td class="st"><span class="pill p-pending">Pending</span><span class="note">Not law.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2025</td>
+        <td><span class="name">S.2277 and H.R. 4344</span>
+          <a href="https://www.congress.gov/bill/119th-congress/senate-bill/2277/text">S.2277</a> would require a DOD report on GPS risks, including a terrestrial backup framework.
+          <a href="https://www.congress.gov/bill/119th-congress/house-bill/4344/text">H.R. 4344</a> would direct an Air Force low-orbit navigation pilot.
+          <a class="nr" href="#n26">[26]</a></td>
+        <td class="st"><span class="pill p-pending">Pending</span><span class="note">Bills, not law.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2026</td>
+        <td><span class="name">House FY2026 defense spending bill</span>
+          Added funding for Resilient GPS satellites that the Space Force had not requested.
+          <span class="cite">(<a href="https://spacenews.com/space-force-may-be-done-with-r-gps-but-congress-isnt/">SpaceNews, 2026</a>) <a class="nr" href="#n27">[27]</a></span></td>
+        <td class="st"><span class="pill p-pending">House-passed</span><span class="note">Not law.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2026</td>
+        <td><span class="name">FAA GNSS Interference Resource Guide and GAO-26-108439</span>
+          The FAA guide says it is not regulatory <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026</a>) <a class="nr" href="#n4">[4]</a></span>.
+          GAO found no real-time detection and unfinished risk assessments for 7 of 8 systems, and made 9 recommendations.
+          <span class="cite">(<a href="https://www.gao.gov/products/gao-26-108439">GAO, 2026</a>) <a class="nr" href="#n12">[12]</a></span></td>
+        <td class="st"><span class="pill p-testing">Open</span><span class="note">FAA agreed to all nine; all still open.</span></td>
+      </tr>
+      <tr>
+        <td class="yr">2025</td>
+        <td><span class="name">ICAO Assembly and Israel's ITU pledge</span>
+          ICAO condemned Russia and North Korea <span class="cite">(<a href="https://www.icao.int/news/icao-assembly-condemns-gnss-radio-frequency-interference-originating-dprk-and-russian">ICAO, 2025</a>) <a class="nr" href="#n30">[30]</a></span>.
+          Israel pledged to limit interference to imminent threats and 15 minutes per incident.
+          <span class="cite">(<a href="https://insidegnss.com/gnss-interference-now-a-constant-of-modern-conflict-swf-annual-report-finds/">Inside GNSS, 2026</a>) <a class="nr" href="#n32">[32]</a></span></td>
+        <td class="st"><span class="pill p-lapsed">Unenforced</span><span class="note">No penalty; the pledge is voluntary.</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ APPENDIX B ============ -->
+<section id="b">
+  <h2><span>Appendix B.</span> More Technology Solutions Beyond Xona</h2>
+  <p class="sub">Each entry is one way to keep working when GPS fails, in plain terms, with the caveat.</p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="label">Low-orbit satellites</div>
+      <h4>Iridium PNT chip</h4>
+      <p>Delivers secure time and location from Iridium's existing satellites. On sale since July 2026, and Iridium says 150+ organizations have asked about it <span class="cite">(<a href="https://www.prnewswire.com/news-releases/iridium-announces-commercial-availability-of-iridium-pnt-asic-bringing-resilient-gnss-protection-to-devices-worldwide-302824520.html">Iridium, 2026</a>)</span>. Iridium claims its signal is up to 1,000 times stronger than GPS <span class="cite">(<a href="https://www.iridium.com/iridium-pnt/platform">Iridium</a>) <a class="nr" href="#n36">[36]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>These are company claims.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Ground-based radio</div>
+      <h4>NextNav</h4>
+      <p>A ground network in the 902–928 MHz band for positioning and timing <span class="cite">(<a href="https://docs.fcc.gov/public/attachments/DA-24-776A1.pdf">FCC, 2024</a>) <a class="nr" href="#n24">[24]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>Contested at the FCC. Railroads, utilities, and toll operators object <span class="cite">(<a href="https://broadbandbreakfast.com/house-appropriators-move-to-block-nextnav-proposal/">Broadband Breakfast, 2026</a>) <a class="nr" href="#n25">[25]</a></span>, and critics say it needs only about 5% of the spectrum it seeks <span class="cite">(<a href="https://www.rstreet.org/commentary/nextnavs-national-security-theater/">R Street, 2026</a>) <a class="nr" href="#n29">[29]</a></span>.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Signed satellite signals</div>
+      <h4>Galileo OSNMA (Europe)</h4>
+      <p>Each message carries a cryptographic signature so receivers can reject fakes. Live since July 24, 2025 <span class="cite">(<a href="https://defence-industry-space.ec.europa.eu/observer-how-galileo-osnma-helps-counter-gnss-spoofing-2025-09-08_en">European Commission, 2025</a>) <a class="nr" href="#n37">[37]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>It is Europe's system, not GPS.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Magnetic navigation</div>
+      <h4>SandboxAQ AQNav</h4>
+      <p>Reads Earth's magnetic field like a map, with AI filtering out the aircraft's own magnetic noise. Stayed within a standard accuracy tolerance for 100% of 150+ flight hours <span class="cite">(<a href="https://thequantuminsider.com/2025/07/16/sandboxaq-and-acubed-achieve-progress-in-magnetic-navigation/">The Quantum Insider, 2025</a>) <a class="nr" href="#n38">[38]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>That result is company-reported, and a later drone test disclosed no accuracy data <span class="cite">(<a href="https://runtimewire.com/article/sandboxaq-aqnav-northrop-grumman-lumberjack-magnetic-navigation-test">Runtime Wire, 2026</a>) <a class="nr" href="#n39">[39]</a></span>.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Camera-based navigation</div>
+      <h4>Ukraine's drones</h4>
+      <p>Onboard AI matches camera images against maps when jamming cuts off GPS <span class="cite">(<a href="https://thedefensepost.com/2026/01/29/ukraine-drones-vision-navigation/">The Defense Post, 2026</a>) <a class="nr" href="#n40">[40]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>Battlefield use, with few public details.</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Detection software</div>
+      <h4>Machine-learning detectors</h4>
+      <p>About 96% detection on drones in the study in the body <span class="cite">(<a href="https://www.sciencedirect.com/science/article/abs/pii/S0360835226004080">Gormus et al., 2026</a>) <a class="nr" href="#n18">[18]</a></span>. In a driving simulation, a small deliberate shift in a spoofed position cut one detector's accuracy from 99.9% to 20.4% <span class="cite">(<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12526650/">PMC study</a>) <a class="nr" href="#n41">[41]</a></span>, and spoofing has also worked against AI-based drone navigation <span class="cite">(<a href="https://arxiv.org/html/2506.08445v1">arXiv, 2025</a>) <a class="nr" href="#n42">[42]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>Simulations and controlled tests only. I found no field evidence of AI-enhanced spoofing.</div>
+    </div>
+
+    <div class="card wide">
+      <div class="label">What DOT tested in 2020</div>
+      <h4>11 technologies</h4>
+      <p>Two low-orbit satellite systems, two fiber-optic timing systems, one map-matching and inertial system, and six ground radio systems <span class="cite">(<a href="https://www.transportation.gov/sites/dot.gov/files/2021-01/NTRSA%20Report%20to%20Congress_Final_January%202021.pdf">U.S. DOT, 2021, p. 7</a>) <a class="nr" href="#n9">[9]</a></span>.</p>
+      <div class="caveat"><b>Caveat</b>A demonstration only, and DOT found no single system meets every need.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPENDIX C ============ -->
+<section id="c">
+  <h2><span>Appendix C.</span> Evidence on How Much Interference There Is</h2>
+  <p class="sub">The key numbers come first, then the cases behind the headlines.</p>
+
+  <h3>Key numbers</h3>
+  <div class="stats">
+    <div class="stat wide">
+      <div class="num">5,655 &middot; 3,228 &middot; 2,375</div>
+      <div class="what">Most spoofed airspace, July–Aug. 2024</div>
+      <p>Incidents over Nicosia, Tel Aviv, and Cairo <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026, p. 49</a>) <a class="nr" href="#n4">[4]</a></span>.</p>
+    </div>
+    <div class="stat">
+      <div class="num">1,100+</div>
+      <div class="what">Spoofed flights per day</div>
+      <p>Up from a few dozen in Feb. 2024 to more than 1,100 in Aug. 2024 <span class="cite">(<a href="https://www.gpsworld.com/gnss-spoofing-threatens-airline-safety-alarming-pilots-and-aviation-officials/">GPS World, 2024</a>) <a class="nr" href="#n5">[5]</a></span>.</p>
+    </div>
+    <div class="stat">
+      <div class="num">+220%</div>
+      <div class="what">GPS signal loss</div>
+      <p>Rise between 2021 and 2024, per IATA <span class="cite">(<a href="https://www.iata.org/en/pressroom/2025-releases/2025-06-18-01/">IATA, 2025</a>) <a class="nr" href="#n6">[6]</a></span>.</p>
+    </div>
+    <div class="stat">
+      <div class="num">~972</div>
+      <div class="what">Gulf ships jammed per day</div>
+      <p>Persian Gulf shipping, June 15–18, 2025 <span class="cite">(<a href="https://windward.ai/blog/middle-east-on-the-precipice-gps-jamming-in-the-arabian-gulf-and-strait-of-hormuz-disrupts-970-ships-daily/">Windward, 2025</a>) <a class="nr" href="#n33">[33]</a></span>.</p>
+    </div>
+    <div class="stat">
+      <div class="num">$1.4T &middot; ~$1B/day</div>
+      <div class="what">Economic stakes</div>
+      <p>Benefits since the 1980s, and the cost of a nationwide outage. The daily figure is a worst-case model; GPS outages have historically lasted under a day <span class="cite">(<a href="https://www.nist.gov/system/files/documents/2020/02/06/gps_finalreport618.pdf">RTI International, 2019</a>) <a class="nr" href="#n3">[3]</a></span>.</p>
+    </div>
+  </div>
+
+  <h3>Cases</h3>
+  <ul class="cases">
+    <li><b>Flight 8243 (Dec. 2024).</b> Jamming, then spoofing near Grozny. A missile struck the plane and killed 38. The interference was not the cause of the crash <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026, p. 14</a>) <a class="nr" href="#n4">[4]</a></span>.</li>
+    <li><b>A pilot report, Amman.</b> A crew judged a terrain alert false and did not start an escape maneuver, because their landing system and air traffic control agreed on their position <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026</a>) <a class="nr" href="#n4">[4]</a></span>.</li>
+    <li><b>U.S. events.</b> Interference near Denver and Dallas in 2022 <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026, p. 10</a>) <a class="nr" href="#n4">[4]</a></span>, and a New Mexico air ambulance crash in May 2026 while military jamming was underway. The NTSB has not determined a cause <span class="cite">(<a href="https://avweb.com/aviation-news/gao-flags-faa-jamming-spoofing-gaps/">AVweb, 2026</a>) <a class="nr" href="#n11">[11]</a></span>.</li>
+    <li><b>Front Eagle (June 2025).</b> The tanker collided with another tanker on June 17, during heavy Gulf jamming. Its operator blamed an “unspecified navigational error” <span class="cite">(<a href="https://windward.ai/blog/middle-east-on-the-precipice-gps-jamming-in-the-arabian-gulf-and-strait-of-hormuz-disrupts-970-ships-daily/">Windward, 2025</a>) <a class="nr" href="#n33">[33]</a></span>.</li>
+    <li><b>Baltic and Black Sea.</b> Baltic interference has been almost daily since February 2022, and the Black Sea is described as a “gray zone” <span class="cite">(<a href="https://www.defensenews.com/global/europe/2025/07/02/researchers-home-in-on-origins-of-russias-baltic-gps-jamming/">Defense News, 2025</a> <a class="nr" href="#n34">[34]</a>; <a href="https://spire.com/blog/space-reconnaissance/gnss-interference-report-black-sea-romanian-airspace/">Spire, 2026</a> <a class="nr" href="#n35">[35]</a>)</span>.</li>
+  </ul>
+
+  <div class="callout"><b>Use with care:</b> the Gulf jamming and the Front Eagle cause are not formally attributed. Counts from companies use different methods, so treat them as trends, not exact totals.</div>
+</section>
+
+<!-- ============ APPENDIX D ============ -->
+<section id="d">
+  <h2><span>Appendix D.</span> Likely Press Questions</h2>
+  <p class="sub">Short answers the office can use if the press asks.</p>
+
+  <div class="qa">
+    <div>
+      <div class="q">Is it safe to fly near conflict zones?</div>
+      <p>Pilots are trained to fall back on other navigation, and the FAA's guide walks them through it, but interference is rising and spoofing is hard to spot <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026</a>) <a class="nr" href="#n4">[4]</a></span>.</p>
+    </div>
+    <div>
+      <div class="q">Why don't we have a backup?</div>
+      <p>Congress ordered one in 2018 but made it subject to appropriations. DOT ran a $10 million demonstration and is still testing <span class="cite">(<a href="https://www.transportation.gov/sites/dot.gov/files/2021-01/NTRSA%20Report%20to%20Congress_Final_January%202021.pdf">U.S. DOT, 2021</a>) <a class="nr" href="#n9">[9]</a></span>.</p>
+    </div>
+    <div>
+      <div class="q">Is the FCC about to give one company spectrum?</div>
+      <p>A draft rule is at the White House budget office, and a House committee moved to block it. Neither is final <span class="cite">(<a href="https://broadbandbreakfast.com/house-appropriators-move-to-block-nextnav-proposal/">Broadband Breakfast, 2026</a>) <a class="nr" href="#n25">[25]</a></span>.</p>
+    </div>
+    <div>
+      <div class="q">Did jamming cause the Azerbaijan Airlines crash?</div>
+      <p>No. A missile struck the plane, though the crew was flying without GPS <span class="cite">(<a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, 2026, p. 14</a>) <a class="nr" href="#n4">[4]</a></span>.</p>
+    </div>
+    <div>
+      <div class="q">Doesn't our ally do the same thing as Russia?</div>
+      <p>Israel is widely reported to spoof defensively <span class="cite">(<a href="https://www.abc.net.au/news/2024-09-22/israel-gps-spoofing-lebanon-beirut-hezbollah/104373018">ABC News, 2024</a>) <a class="nr" href="#n31">[31]</a></span> and has pledged limits <span class="cite">(<a href="https://insidegnss.com/gnss-interference-now-a-constant-of-modern-conflict-swf-annual-report-finds/">Inside GNSS, 2026</a>) <a class="nr" href="#n32">[32]</a></span>. We should push all states, including partners, toward the same limits.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NOTES ============ -->
+<section id="notes">
+  <h2>Brief Notes on Sources</h2>
+  <p class="sub">Each note says what the source is good for and where to be careful. The numbers match the bracketed numbers in the appendices.</p>
+
+  <ol class="notes">
+    <li id="n1"><a href="https://www.gps.gov/gps-and-telling-time">GPS.gov, “GPS and Telling Time.”</a> <span class="use">Official source for GPS as a timing system for telecom, power, and finance.</span></li>
+    <li id="n2"><a href="https://docs.fcc.gov/public/attachments/DOC-410031A1.pdf">Federal Communications Commission fact sheet (Mar. 2025).</a> <span class="use">What happens when timing fails: carrier networks lose sync, 911 suffers.</span></li>
+    <li id="n3"><a href="https://www.nist.gov/system/files/documents/2020/02/06/gps_finalreport618.pdf">RTI International for NIST, Economic Benefits of GPS (2019).</a> <span class="use">The $1.4 trillion and $1 billion-a-day figures. The daily figure is a worst-case model.</span></li>
+    <li id="n4"><a href="https://www.faa.gov/about/office_org/headquarters_offices/avs/offices/afx/afs/afs400/afs410/GNSS/GPS_GNSS_Interference_Resource_Guide.pdf">FAA, GNSS Interference Resource Guide v1.1 (Mar. 2026).</a> <span class="use">The main U.S. government source on jamming and spoofing. Advisory, not regulatory.</span></li>
+    <li id="n5"><a href="https://www.gpsworld.com/gnss-spoofing-threatens-airline-safety-alarming-pilots-and-aviation-officials/">GPS World, “GNSS spoofing threatens airline safety…” (Sept. 24, 2024).</a> <span class="use">Spoofed-flight counts from SkAI Data Services and ZHAW. SkAI is a university spin-off that sells tracking.</span></li>
+    <li id="n6"><a href="https://www.iata.org/en/pressroom/2025-releases/2025-06-18-01/">IATA/EASA press release (June 18, 2025).</a> <span class="use">The 220% rise in GPS signal-loss events, 2021–2024.</span></li>
+    <li id="n7"><a href="https://www.gps.gov/gps-legislation">GPS.gov, “GPS Legislation.”</a> <span class="use">Text summaries of the 2010, 2016, 2017, and 2018 backup laws.</span></li>
+    <li id="n8"><a href="https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title49-section312&amp;num=0&amp;edition=prelim">49 U.S.C. § 312.</a> <span class="use">Current law, including the two-year deadline and the 2022 “land-based” change.</span></li>
+    <li id="n9"><a href="https://www.transportation.gov/sites/dot.gov/files/2021-01/NTRSA%20Report%20to%20Congress_Final_January%202021.pdf">U.S. DOT, NTRSA Roadmap to Implementation (Jan. 2021).</a> <span class="use">Primary source for the $10M demonstration, the roundtables, and “not an implementation plan.”</span></li>
+    <li id="n10"><a href="https://www.dhs.gov/publication/st-resilient-pnt-for-critical-infrastructure-fact-sheet">DHS, Resilient PNT fact sheet (Jan. 2023).</a> <span class="use">Says civilian GPS signals are low-power and unencrypted.</span></li>
+    <li id="n11"><a href="https://avweb.com/aviation-news/gao-flags-faa-jamming-spoofing-gaps/">AVweb, “GAO Flags FAA Jamming, Spoofing Gaps” (Sept. 2026).</a> <span class="use">Covers the GAO report and the New Mexico crash. Trade press.</span></li>
+    <li id="n12"><a href="https://www.gao.gov/products/gao-26-108439">U.S. GAO, GAO-26-108439 (Sept. 2026).</a> <span class="use">Primary source for the FAA detection and risk-assessment gaps.</span></li>
+    <li id="n13"><a href="https://www.xonaspace.com/mission">Xona, “Positioning the world for progress.”</a> <span class="use">The company's mission. Backers appear only as logos.</span></li>
+    <li id="n14"><a href="https://www.xonaspace.com/news/series-c">Xona, Series C announcement (Mar. 2026).</a> <span class="use">Company account of its $170M raise, investors, and receiver testing.</span></li>
+    <li id="n15"><a href="https://www.gpsworld.com/lockheed-martin-invests-in-xonas-commercial-navigation-constellation/">GPS World, “Lockheed Martin invests in Xona…” (2022).</a> <span class="use">Independent confirmation of Lockheed's investment.</span></li>
+    <li id="n16"><a href="https://www.sri.com/press/story/xona-secures-a-92-million-funding-round/">SRI, “Xona secures a $92 million funding round.”</a> <span class="use">Shows SRI licensed technology to Xona. SRI is not an investor.</span></li>
+    <li id="n17"><a href="https://www.xonaspace.com/pulsar">Xona, Pulsar page.</a> <span class="use">Xona's specs and claims. Marketing, not independent verification.</span></li>
+    <li id="n18"><a href="https://www.sciencedirect.com/science/article/abs/pii/S0360835226004080">Gormus et al., Computers &amp; Industrial Engineering (2026).</a> <span class="use">Controlled test of ML detection on drones. I saw the abstract and snippets only.</span></li>
+    <li id="n19"><a href="https://www.transportation.gov/briefing-room/department-transportation-awards-7-million-complementary-positioning-navigation-and">U.S. DOT, “Awards $7 Million for Complementary PNT” (2024).</a> <span class="use">The main federal testing effort so far.</span></li>
+    <li id="n20"><a href="https://www.volpe.dot.gov/news/executing-rapid-phase-us-dot-complementary-positioning-navigation-and-timing-action-plan-one">Volpe Center, Complementary PNT Action Plan update (Apr. 2026).</a> <span class="use">Phase I done June 2025, report delivered March 2026.</span></li>
+    <li id="n21"><a href="https://www.gps.gov/resilience-through-responsible-use-pnt">GPS.gov, “Resilience Through Responsible Use of PNT.”</a> <span class="use">Index of federal actions, including Executive Order 13905.</span></li>
+    <li id="n22"><a href="https://space.commerce.gov/policy/u-s-space-based-pnt-policy/">Office of Space Commerce, U.S. Space-Based PNT Policy.</a> <span class="use">Summary of SPD-7, the current national PNT policy.</span></li>
+    <li id="n23"><a href="https://www.gpsworld.com/nextnav-proposes-a-gps-complement-and-backup-in-the-lower-900-mhz-band/">GPS World, NextNav proposal (May 2025).</a> <span class="use">Confirms the 2025 FCC inquiry and lays out NextNav's case.</span></li>
+    <li id="n24"><a href="https://docs.fcc.gov/public/attachments/DA-24-776A1.pdf">FCC Public Notice DA 24-776 (2024).</a> <span class="use">Official description of NextNav's request.</span></li>
+    <li id="n25"><a href="https://broadbandbreakfast.com/house-appropriators-move-to-block-nextnav-proposal/">Broadband Breakfast, “House Appropriators Move to Block NextNav” (Apr. 2026).</a> <span class="use">Amendment language, opponents, and the March 2026 draft rule. Committee action only.</span></li>
+    <li id="n26">Congress.gov, <a href="https://www.congress.gov/bill/119th-congress/senate-bill/2277/text">S.2277</a> and <a href="https://www.congress.gov/bill/119th-congress/house-bill/4344/text">H.R. 4344</a>. <span class="use">Pending bills.</span></li>
+    <li id="n27"><a href="https://spacenews.com/space-force-may-be-done-with-r-gps-but-congress-isnt/">SpaceNews, “Space Force may be done with R-GPS…” (2026).</a> <span class="use">Congress adding Resilient GPS funding the Space Force did not request.</span></li>
+    <li id="n28"><a href="https://nextnav.com/law-360-navigation-co-criticisms-overblown/">NextNav, Law360 repost (2024).</a> <span class="use">NextNav's “no cost to taxpayers” claim. Advocacy.</span></li>
+    <li id="n29"><a href="https://www.rstreet.org/commentary/nextnavs-national-security-theater/">R Street Institute, “NextNav's National Security Theater” (2026).</a> <span class="use">A critic's view. Opinion.</span></li>
+    <li id="n30"><a href="https://www.icao.int/news/icao-assembly-condemns-gnss-radio-frequency-interference-originating-dprk-and-russian">ICAO, Assembly condemns GNSS interference (Oct. 2025).</a> <span class="use">The formal international finding. No penalty.</span></li>
+    <li id="n31"><a href="https://www.abc.net.au/news/2024-09-22/israel-gps-spoofing-lebanon-beirut-hezbollah/104373018">ABC News (Australia), Israel GPS spoofing (Sept. 2024).</a> <span class="use">The defensive logic of Israeli spoofing and civilian spillover.</span></li>
+    <li id="n32"><a href="https://insidegnss.com/gnss-interference-now-a-constant-of-modern-conflict-swf-annual-report-finds/">Inside GNSS, Secure World Foundation summary (2026).</a> <span class="use">Source for Israel's 15-minute ITU pledge. Trade-press summary.</span></li>
+    <li id="n33"><a href="https://windward.ai/blog/middle-east-on-the-precipice-gps-jamming-in-the-arabian-gulf-and-strait-of-hormuz-disrupts-970-ships-daily/">Windward, “Middle East on the Precipice” (June 2025).</a> <span class="use">Gulf jamming and the Front Eagle collision. Commercial data.</span></li>
+    <li id="n34"><a href="https://www.defensenews.com/global/europe/2025/07/02/researchers-home-in-on-origins-of-russias-baltic-gps-jamming/">Defense News, Baltic jamming (July 2025).</a> <span class="use">Baltic interference since 2022. Not fully opened.</span></li>
+    <li id="n35"><a href="https://spire.com/blog/space-reconnaissance/gnss-interference-report-black-sea-romanian-airspace/">Spire Global, Black Sea report (2026).</a> <span class="use">Company blog. Not fully opened.</span></li>
+    <li id="n36"><a href="https://www.prnewswire.com/news-releases/iridium-announces-commercial-availability-of-iridium-pnt-asic-bringing-resilient-gnss-protection-to-devices-worldwide-302824520.html">Iridium press release (July 2026)</a> and <a href="https://www.iridium.com/iridium-pnt/platform">PNT platform page</a>. <span class="use">Product on sale now. Company claims.</span></li>
+    <li id="n37"><a href="https://defence-industry-space.ec.europa.eu/observer-how-galileo-osnma-helps-counter-gnss-spoofing-2025-09-08_en">European Commission, “How Galileo OSNMA helps counter spoofing” (Sept. 2025).</a> <span class="use">Explains signed signals. Live July 24, 2025.</span></li>
+    <li id="n38"><a href="https://thequantuminsider.com/2025/07/16/sandboxaq-and-acubed-achieve-progress-in-magnetic-navigation/">The Quantum Insider on SandboxAQ (July 2025).</a> <span class="use">Flight-test results. Company-reported.</span></li>
+    <li id="n39"><a href="https://runtimewire.com/article/sandboxaq-aqnav-northrop-grumman-lumberjack-magnetic-navigation-test">Runtime Wire on SandboxAQ (Sept. 2026).</a> <span class="use">Independent caution on the drone test.</span></li>
+    <li id="n40"><a href="https://thedefensepost.com/2026/01/29/ukraine-drones-vision-navigation/">The Defense Post, Ukraine vision navigation (Jan. 2026).</a> <span class="use">Example of camera-based navigation.</span></li>
+    <li id="n41"><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12526650/">PMC, “Adversarial Evasion Attacks on SVM-Based GPS Spoofing Detection.”</a> <span class="use">Simulation only.</span></li>
+    <li id="n42"><a href="https://arxiv.org/html/2506.08445v1">arXiv, “GPS Spoofing Attacks on AI-based Navigation…” (2025).</a> <span class="use">Preprint, not peer-reviewed.</span></li>
+  </ol>
+</section>
+
+</main>
+</body>
+</html>
